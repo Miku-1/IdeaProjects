@@ -1,4 +1,4 @@
-package com.task.test1;
+package cn.itcast.task.test1;
 
 public class DogFood{
     // 狗粮含水量  湿的还是干的

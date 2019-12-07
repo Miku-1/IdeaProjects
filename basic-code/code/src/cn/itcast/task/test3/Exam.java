@@ -1,4 +1,4 @@
-package com.task.test3;
+package cn.itcast.task.test3;
 
 public class Exam {
     // 考试时间

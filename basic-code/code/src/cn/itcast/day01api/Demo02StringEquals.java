@@ -1,4 +1,4 @@
-package cn.itcast.cn.itcast.day01api;
+package cn.itcast.day01api;
 
 /*
 *

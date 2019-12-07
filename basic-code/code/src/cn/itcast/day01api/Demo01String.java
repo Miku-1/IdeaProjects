@@ -1,4 +1,4 @@
-package cn.itcast.cn.itcast.day01api;
+package cn.itcast.day01api;
 /*
 *   java中所有的 双引号字符串就是 String 类对象
 *  特点:

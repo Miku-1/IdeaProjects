@@ -1,4 +1,4 @@
-package com.task.test2;
+package cn.itcast.task.test2;
 
 public class Worker {
     // 性别

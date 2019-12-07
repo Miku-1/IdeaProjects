@@ -1,7 +1,7 @@
 package com.task.test4;
 
 public class Phone {
-    // 2122
+
     // 品牌
     private String brand;
 

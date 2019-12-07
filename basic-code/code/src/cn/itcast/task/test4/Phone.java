@@ -1,6 +1,8 @@
-package com.task.test4;
+package cn.itcast.task.test4;
 
 public class Phone {
+    // 产品编号
+    private Integer id;
 
     // 品牌
     private String brand;
@@ -19,6 +21,14 @@ public class Phone {
 
     // 储存空间
     private Integer rom;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getBrand() {
         return brand;
@@ -71,12 +81,13 @@ public class Phone {
     @Override
     public String toString() {
         return "Phone{" +
-                "brand='" + brand + '\'' +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
                 ", price=" + price +
                 ", color='" + color + '\'' +
                 ", mobileCpu='" + mobileCpu + '\'' +
-                ", ram=" + ram +
-                ", rom=" + rom +
+                ", ram=" + ram + "g" +
+                ", rom=" + rom + "g" +
                 '}';
     }
 }

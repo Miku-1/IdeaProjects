@@ -1,4 +1,4 @@
-package cn.itcast.day02;
+package cn.itcast.day02api;
 
 public class Pupil {
     private String name;

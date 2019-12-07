@@ -29,7 +29,7 @@ public class SpeakStory {
             iphone.setMobileCpu("A11");
             iphone.setRam(2);
             iphone.setRom(64);
-            iphone.setPrice(5000.00);
+            iphone.setPrice(3000.00);
             phoneList.add(iphone);
         }
         System.out.println(phoneList);

@@ -9,8 +9,8 @@ public class Department {
     // 部门名称
     private String depName;
 
-    // 部门领导
-    private String depLeader;
+    // 部门领导编号
+    private String leaderId;
 
     public String getDepId() {
         return depId;
@@ -29,10 +29,10 @@ public class Department {
     }
 
     public String getDepLeader() {
-        return depLeader;
+        return leaderId;
     }
 
     public void setDepLeader(String depLeader) {
-        this.depLeader = depLeader;
+        this.leaderId = depLeader;
     }
 }

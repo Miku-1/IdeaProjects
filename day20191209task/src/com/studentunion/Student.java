@@ -14,7 +14,7 @@ public class Student {
     private String stuSex;
 
     // 年龄
-    private String stuAge;
+    private Integer stuAge;
 
     // 院系
     private String stuProfession;
@@ -50,11 +50,11 @@ public class Student {
         this.stuSex = stuSex;
     }
 
-    public String getStuAge() {
+    public Integer getStuAge() {
         return stuAge;
     }
 
-    public void setStuAge(String stuAge) {
+    public void setStuAge(Integer stuAge) {
         this.stuAge = stuAge;
     }
 

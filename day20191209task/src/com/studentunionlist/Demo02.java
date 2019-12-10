@@ -2,6 +2,7 @@ package com.studentunionlist;
 
 import com.studentunion.Student;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 * 学生表
 * */
 public class Demo02 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<Student> students = new ArrayList<>();
 
         Student ali = new Student();
@@ -23,10 +24,19 @@ public class Demo02 {
         ali.setStuPhone("13235679898");
 
         students.add(ali);
-
         System.out.println(students.get(0).toString());
+        // 将该学生信息写入本地文件
         String filepath = "E:\\file\\Students.txt";
+        outPut(students.get(0).toString(),filepath);
 
+
+    }
+
+    private static void outPut(String word,String filepath) throws IOException {
+        File file = new File(filepath);
+        Writer write = new OutputStreamWriter(new FileOutputStream(filepath));
+        write.write(word);
+        write.close();
 
     }
 

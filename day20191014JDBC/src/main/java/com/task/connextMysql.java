@@ -83,6 +83,8 @@ public class connextMysql {
     }
     public static void main(String[] args) {
         String tableName1 = "t_animal";
+        String tableName2 = "t_goods";
+        String tableName3 = "t_person";
         String sql2 = "INSERT INTO t_animal (name,age) VALUES('dog','2'),('cat',3)";
         String sql3 = "DELETE FROM t_animal WHERE ID = '5'";
         String sql4 = "UPDATE t_animal SET name = 'cow' WHERE ID = '6'";

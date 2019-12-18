@@ -1,17 +1,17 @@
 package com.dao;
 
 /*
- *@Date: 11:24 2019/12/18
- *@Description: 对 QQ分组表相关操作的实现
+ *@Date: 15:28 2019/12/17
+ *@Description:对QQ信息表相关操作的实现
  */
+
+import com.pojo.QqMember;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pojo.QqGroup;
-
-public class QqGroupDao {
+public class QqMemberDao {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     //连接的数据库，结构是 协议+ip地址+端口号+数据库名
     private static final String URL = "jdbc:mysql://101.132.33.149:3306/wenxin";
@@ -20,7 +20,7 @@ public class QqGroupDao {
     //密码
     private static final String PASSWORD = "123456";
 
-    public QqGroupDao() {
+    public QqMemberDao() {
         try {
             Class.forName(DRIVER);
 
@@ -40,7 +40,7 @@ public class QqGroupDao {
         int total = 0;
         try (Connection c = getConnection(); Statement s = c.createStatement();) {
 
-            String sql = "SELECT COUNT(*) FROM t_qq_group";
+            String sql = "SELECT COUNT(*) FROM t_qq_member";
 
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
@@ -59,18 +59,21 @@ public class QqGroupDao {
     /*
      *添加
      * */
-    public void add(QqGroup qqGroup) {
-        String sql = "INSERT INTO t_qq_group values(null,?,?)";
+    public void add(QqMember qqMember) {
+        String sql = "INSERT INTO t_qq_member values(null,?,?,?,?,?)";
         try (Connection c = getConnection(); PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, qqGroup.getGroupName());
-            ps.setDate(2, (Date) qqGroup.getCreateTime());
+            ps.setString(1, qqMember.getQqNumber());
+            ps.setString(2, qqMember.getPassword());
+            ps.setString(3, qqMember.getImgUrl());
+            ps.setString(4, qqMember.getNickName());
+            ps.setString(5, qqMember.getSex());
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 int id = rs.getInt(1);
-                qqGroup.setId(id);
-                System.out.println(qqGroup.toString());
+                qqMember.setId(id);
+                System.out.println(qqMember.toString());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,12 +84,14 @@ public class QqGroupDao {
     /*
      * 修改
      * */
-    public void update(QqGroup qqGroup) {
-        String sql = "UPDATE t_qq_group SET groupname = ? ,createtime = ? WHERE id = ?";
+    public void update(QqMember qqMember) {
+        String sql = "UPDATE t_qq_member SET password = ? ,img_url = ?,nickename = ?,sex =? WHERE qq_number = ?";
         try (Connection c = getConnection(); PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, qqGroup.getGroupName());
-            ps.setDate(2, (Date) qqGroup.getCreateTime());
-            ps.setInt(3, qqGroup.getId());
+            ps.setString(1, qqMember.getPassword());
+            ps.setString(2, qqMember.getImgUrl());
+            ps.setString(3, qqMember.getNickName());
+            ps.setString(4, qqMember.getSex());
+            ps.setString(5, qqMember.getQqNumber());
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,8 +102,8 @@ public class QqGroupDao {
     /*
      * 删除
      * */
-    public void delete(Integer id) {
-        String sql = "DELETE FROM t_qq_group WHERE id = " + id;
+    public void delete(String qqNumber) {
+        String sql = "DELETE FROM t_qq_member WHERE qq_number = " + qqNumber;
         try (Connection c = getConnection(); Statement s = c.createStatement()) {
             s.execute(sql);
         } catch (SQLException e) {
@@ -107,42 +112,45 @@ public class QqGroupDao {
     }
 
     /*
-     *按id查找
+     *按qq号查找
      * */
-    public QqGroup get(Integer id) {
-        QqGroup qqGroup = null;
-        String sql = "SELECT * FROM t_qq_group WHERE id = " + id;
+    public QqMember get(String qqNumber) {
+        QqMember qqMember = null;
+        String sql = "SELECT * FROM t_qq_member WHERE qq_number = " + qqNumber;
         try (Connection c = getConnection(); Statement s = c.createStatement()) {
             ResultSet rs = s.executeQuery(sql);
 
             if (rs.next()) {
-                qqGroup = new QqGroup();
-                qqGroup.setId(rs.getInt(1));
-                qqGroup.setGroupName(rs.getString(2));
-                qqGroup.setCreateTime(rs.getDate(3));
+                qqMember = new QqMember();
+                qqMember.setQqNumber(rs.getString("qq_bumber"));
+                qqMember.setImgUrl(rs.getString("img_url"));
+                qqMember.setSex(rs.getString("sex"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return qqGroup;
+        return qqMember;
     }
 
     /*
      * 利用对象数组输出表中数据
      * */
     public List getList() {
-        List<QqGroup> list = new ArrayList<>();
+        List<QqMember> list = new ArrayList<>();
         try (Connection c = getConnection(); Statement s = c.createStatement();) {
 
-            String sql = "SELECT * FROM t_qq_group";
+            String sql = "SELECT * FROM t_qq_member";
 
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
-                QqGroup qqGroup = new QqGroup();
-                qqGroup.setId(rs.getInt(1));
-                qqGroup.setGroupName(rs.getString(2));
-                qqGroup.setCreateTime(rs.getDate(3));
-                list.add(qqGroup);
+                QqMember qqMember = new QqMember();
+                qqMember.setId(rs.getInt(1));
+                qqMember.setQqNumber(rs.getString(2));
+                qqMember.setPassword(rs.getString(3));
+                qqMember.setImgUrl(rs.getNString(4));
+                qqMember.setNickName(rs.getNString(5));
+                qqMember.setSex(rs.getString(6));
+                list.add(qqMember);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -152,18 +160,7 @@ public class QqGroupDao {
     }
 
     public static void main(String[] args) throws SQLException {
-        QqGroup qqGroup = new QqGroup();
-        qqGroup.setId(3);
-        qqGroup.setGroupName("家人");
-        qqGroup.setCreateTime(new Date(2019 - 1900, 12 - 1, 18));
 
-        QqGroupDao qqGroupDao = new QqGroupDao();
-        qqGroupDao.getTotal();
-//        qqGroupDao.add(qqGroup);
-//        qqGroupDao.update(qqGroup);
-//        qqGroupDao.delete(5);
-//        System.out.println(qqGroupDao.get(5).toString());
-        System.out.println(qqGroupDao.getList().toString());
 
     }
 }

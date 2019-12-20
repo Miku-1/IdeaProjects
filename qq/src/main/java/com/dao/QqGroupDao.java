@@ -36,7 +36,7 @@ public class QqGroupDao {
     /*
      * 获取表中的数据数目
      * */
-    public int getTotal() {
+    public Integer getTotal() {
         int total = 0;
         try (Connection c = getConnection(); Statement s = c.createStatement();) {
 
@@ -83,11 +83,12 @@ public class QqGroupDao {
      * */
     public void update(QqGroup qqGroup) {
         String sql = "UPDATE t_qq_group SET groupname = ? ,createtime = ? WHERE id = ?";
-        try (Connection c = getConnection(); PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection c = getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, qqGroup.getGroupName());
             ps.setDate(2, (Date) qqGroup.getCreateTime());
             ps.setInt(3, qqGroup.getId());
             ps.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -154,16 +155,16 @@ public class QqGroupDao {
     public static void main(String[] args) throws SQLException {
         QqGroup qqGroup = new QqGroup();
         qqGroup.setId(3);
-        qqGroup.setGroupName("家人");
+        qqGroup.setGroupName("同学");
         qqGroup.setCreateTime(new Date(2019 - 1900, 12 - 1, 18));
 
         QqGroupDao qqGroupDao = new QqGroupDao();
         qqGroupDao.getTotal();
 //        qqGroupDao.add(qqGroup);
-//        qqGroupDao.update(qqGroup);
+        qqGroupDao.update(qqGroup);
 //        qqGroupDao.delete(5);
 //        System.out.println(qqGroupDao.get(5).toString());
-        System.out.println(qqGroupDao.getList().toString());
+//        System.out.println(qqGroupDao.getList().toString());
 
     }
 }

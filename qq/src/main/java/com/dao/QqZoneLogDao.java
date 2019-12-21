@@ -6,8 +6,11 @@ package com.dao;
  */
 
 import com.pojo.QZoneLog;
+import com.pojo.QqGroup;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QqZoneLogDao {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -66,11 +69,43 @@ public class QqZoneLogDao {
     public void update(QZoneLog qZoneLog){
         String sql = "UPDATE t_qq_zone_log SET title = ?,content = ?,create_date = ?";
         try(Connection c =getConnection();PreparedStatement ps = c.prepareStatement(sql)) {
-
+            ps.setString(1,qZoneLog.getTitle());
+            ps.setString(2,qZoneLog.getContent());
+            ps.setDate(3,(Date) qZoneLog.getCreateDate());
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } ;
     }
 
+    public void delete(Integer id) {
+        String sql = "DELETE FROM t_qq_zone_log WHERE id = " + id;
+        try (Connection c = getConnection(); Statement s = c.createStatement()) {
+            s.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List getList() {
+        List<QZoneLog> list = new ArrayList<>();
+        try (Connection c = getConnection(); Statement s = c.createStatement();) {
+
+            String sql = "SELECT * FROM t_qq_zone_log";
+
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                QZoneLog qZoneLog = new QZoneLog();
+                qZoneLog.setId(rs.getInt(1));
+                qZoneLog.setTitle(rs.getString(2));
+                qZoneLog.setTitle(rs.getString(3));
+                qZoneLog.setCreateDate(rs.getDate(4));
+                list.add(qZoneLog);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+    }
 }

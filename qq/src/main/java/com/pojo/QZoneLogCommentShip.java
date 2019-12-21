@@ -8,7 +8,7 @@ package com.pojo;
 import lombok.Data;
 
 @Data
-public class QZoneLogCommontShip {
+public class QZoneLogCommentShip {
     private Integer id;
     /**
      * 日志id
